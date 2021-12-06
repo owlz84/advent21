@@ -8,12 +8,13 @@ trait Diagnostics extends LazyLogging {
   def getBitFrequency(bitString: List[Char]): Map[Char, Int] = {
     bitString
       .groupBy(identity)
-      .toMap.mapValues(_.length)
+      .toMap
+      .mapValues(_.length)
   }
 
   def getMostCommonBit(bitString: List[Char]): Char = {
     val bitFrequencies = getBitFrequency(bitString)
-    val mostCommon = ListMap(bitFrequencies.toSeq.sortBy(_._2):_*).head
+    val mostCommon = ListMap(bitFrequencies.toSeq.sortBy(_._2): _*).head
     mostCommon._1
   }
 
@@ -36,7 +37,7 @@ trait Diagnostics extends LazyLogging {
 
     logger.debug(s"Gamma: $gamma, Epsilon: $epsilon")
 
-    gamma * epsilon 
+    gamma * epsilon
   }
 
   def getRating(report: List[String], highBit: Char, lowBit: Char): String = {
@@ -45,9 +46,8 @@ trait Diagnostics extends LazyLogging {
       val bits = filteredReport.transpose.apply(i)
       val bitCounts = getBitFrequency(bits)
       val filterBit = if (bitCounts('0') > bitCounts('1')) lowBit else highBit
-      val indices = bits
-        .zipWithIndex
-        .collect({ case (bit, idx) if bit == filterBit => idx})
+      val indices = bits.zipWithIndex
+        .collect({ case (bit, idx) if bit == filterBit => idx })
       if (indices.length == 1) return indices.map(filteredReport).head
       filteredReport = indices.map(filteredReport)
     }
