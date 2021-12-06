@@ -5,26 +5,17 @@ import scala.collection.immutable.ListMap
 
 trait Diagnostics extends LazyLogging {
 
-  def getBitFrequency(bitString: List[Char]): Map[Char, Int] = {
-    bitString
-      .groupBy(identity)
-      .toMap
-      .mapValues(_.length)
-  }
+  def getBitFrequency(bitString: List[Char]): Map[Char, Int] =
+    bitString.groupBy(identity).toMap.mapValues(_.length)
 
-  def getMostCommonBit(bitString: List[Char]): Char = {
+  def getMostCommonBit(bitString: List[Char]): Char =
     getBitFrequency(bitString).toSeq.sortBy(_._2).head._1
-  }
 
-  def getGammaString(report: List[String]): String = {
+  def getGammaString(report: List[String]): String =
     report.transpose.map(getMostCommonBit).mkString("")
-  }
 
-  def getEpsilonString(gammaString: String): String = {
-    gammaString
-      .map(c => if (c == '0') "1" else "0")
-      .mkString("")
-  }
+  def getEpsilonString(gammaString: String): String =
+    gammaString.map(c => if (c == '0') "1" else "0").mkString("")
 
   def getPowerConsumption(report: List[String]): Int = {
     val gammaString = getGammaString(report)
