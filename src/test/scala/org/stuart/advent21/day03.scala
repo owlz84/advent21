@@ -15,7 +15,7 @@ class day03 extends FunSuite with Matchers with BeforeAndAfterEach with LazyLogg
   test(
     "The dignostic interpreter should correctly calculate power consumption"
   ) {
-    val result = sub.getPowerConsumption(day03.testDataPart1)
+    val result = sub.getPowerConsumption(day03.testData)
     result shouldBe day03.expectedResultPart1
   }
 
@@ -26,10 +26,22 @@ class day03 extends FunSuite with Matchers with BeforeAndAfterEach with LazyLogg
     logger.info(s"Day 03, part 1 result = $result")
   }
 
+  test("The diagnostic interpreter should correctly calculate life support rating") {
+    val result = sub.getLifeSupportRating(day03.testData)
+    result shouldBe day03.expectedResultPart2
+  }
+
+  test(
+    "(calculate submission for part 2)"
+  ) {
+    val result = sub.getLifeSupportRating(day03.input)
+    logger.info(s"Day 03, part 2 result = $result")
+  }
+
 }
 
 object day03 {
-  val testDataPart1 = List(
+  val testData = List(
     "00100",
     "11110",
     "10110",
@@ -45,7 +57,7 @@ object day03 {
   )
   val expectedResultPart1 = 198
 
-  // val expectedResultPart2 = 900
+  val expectedResultPart2 = 230
 
   val input = List(
     "000110000001",
