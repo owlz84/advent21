@@ -1,7 +1,7 @@
 package org.stuart.advent21
 
 import org.stuart.advent21.navigation.{Direction, Heading}
-import org.scalatest.{FunSuite, Matchers, BeforeAndAfterEach}
+import org.scalatest._
 
 class day02 extends FunSuite with Matchers with BeforeAndAfterEach {
   
@@ -19,7 +19,7 @@ class day02 extends FunSuite with Matchers with BeforeAndAfterEach {
     check shouldBe day02.expectedResultPart1
   }
 
-  test("(create solution for challenge)") {
+  test("(create solution for challenge part 1)") {
     day02.input.map({
       case(direction, magnitude) => Heading(direction, magnitude)
     }).map(sub.move)
