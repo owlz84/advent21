@@ -13,9 +13,7 @@ trait Diagnostics extends LazyLogging {
   }
 
   def getMostCommonBit(bitString: List[Char]): Char = {
-    val bitFrequencies = getBitFrequency(bitString)
-    val mostCommon = ListMap(bitFrequencies.toSeq.sortBy(_._2): _*).head
-    mostCommon._1
+    getBitFrequency(bitString).toSeq.sortBy(_._2).head._1
   }
 
   def getGammaString(report: List[String]): String = {
