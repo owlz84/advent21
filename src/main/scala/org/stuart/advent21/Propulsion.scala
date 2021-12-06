@@ -1,19 +1,27 @@
 package org.stuart.advent21
 
+import com.typesafe.scalalogging.LazyLogging
 import org.stuart.advent21.navigation.{Location, Heading, Direction}
 
-trait Propulsion {
-  var location = Location(0, 0)
+trait Propulsion extends LazyLogging {
+  var location = Location(0, 0, 0)
   def move(vector: Heading) = {
-    val depthChange = vector.direction match {
+    val aimChange = vector.direction match {
       case Direction.down => vector.magnitude
-      case Direction.up => -1 * vector.magnitude
-      case _ => 0
+      case Direction.up   => -1 * vector.magnitude
+      case _              => 0
     }
     val positionChange = vector.direction match {
       case Direction.forward => vector.magnitude
-      case _ => 0
+      case _                 => 0
     }
-    location = Location(location.depth + depthChange, location.position + positionChange)
+    val newAim = location.aim + aimChange
+    val depthChange = newAim * positionChange
+    location = Location(
+      location.depth + depthChange,
+      location.horizontalPosition + positionChange,
+      newAim
+    )
+    logger.debug(location.toString())
   }
 }
