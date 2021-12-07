@@ -45,8 +45,8 @@ class Bingo {
                 board.colCount(j) += 1
                 board.rowCount(k) += 1
                 if (
-                  board.colCount(j) >= board.lenSides | 
-                  board.rowCount(k) >= board.lenSides
+                  board.colCount(j) >= board.lenSides |
+                    board.rowCount(k) >= board.lenSides
                 ) {
                   turnCountByBoard += ((i, turn, num))
                 }
