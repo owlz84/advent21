@@ -1,7 +1,6 @@
 package org.stuart.advent21
 
 import com.typesafe.scalalogging.LazyLogging
-import org.stuart.advent21.navigation.{Location, Heading, Direction}
 
 trait Propulsion extends LazyLogging {
   var location = Location(0, 0, 0)
