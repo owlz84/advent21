@@ -60,13 +60,9 @@ class Bingo extends LazyLogging {
 
   def play(nums: List[Int]) = {
     calcTurnsUntilWin(nums)
-    val winFirstStats = turnCountByBoard.sortBy(_._2).head
-    val winFirstScore = winFirstStats._3 * boards(winFirstStats._1).score
-    val winLastStats = turnCountByBoard.sortBy(_._2).last
-    val winLastScore = winLastStats._3 * boards(winLastStats._1).score
-    // logger.debug(winLastStats.toString)
-    // logger.debug(winLastScore.toString)
-    // logger.debug(boards(winLastStats._1).pretty)
+    val sortedStats = turnCountByBoard.sortBy(_._2)
+    val winFirstScore = sortedStats.head._3 * boards(sortedStats.head._1).score
+    val winLastScore = sortedStats.last._3 * boards(sortedStats.last._1).score
     (winFirstScore, winLastScore)
   }
 }
