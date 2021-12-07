@@ -1,6 +1,5 @@
 package org.stuart.advent21
 
-import org.stuart.advent21.navigation.{Direction, Heading}
 import org.scalatest._
 import com.typesafe.scalalogging.LazyLogging
 
