@@ -1,9 +1,8 @@
 package org.stuart.advent21
 
-import com.typesafe.scalalogging.LazyLogging
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
-class Bingo extends LazyLogging {
+class Bingo {
 
   class Row(var squares: ArrayBuffer[Int]) extends ArrayBuffer {
     def pretty = squares.mkString("\t")
