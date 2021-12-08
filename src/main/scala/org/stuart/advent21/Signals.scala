@@ -20,7 +20,7 @@ object Signals {
 
     val uniqueNumLengths = List(2, 3, 4, 7)
 
-    def uniqueNums(signal: Signal) = signal.patterns
+    def uniqueNums(signal: Signal): Int = signal.patterns
       .filter(pattern => uniqueNumLengths.contains(pattern.chars.size))
       .size
 
