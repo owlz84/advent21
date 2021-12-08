@@ -25,7 +25,7 @@ object Signals {
       .size
 
     val inputWiringPermutations =
-      ('a' to 'g').permutations.map(_.toList).map(Setting(_))
+      ('a' to 'g').permutations.map(_.toList).map(Setting)
 
     val segmentSettingMap = Map(
       "0" -> List(1, 2, 3, 5, 6, 7),
