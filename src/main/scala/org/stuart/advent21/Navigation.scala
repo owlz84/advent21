@@ -1,9 +1,44 @@
 package org.stuart.advent21
 
 import com.typesafe.scalalogging.LazyLogging
-import scala.collection.mutable.{Queue, HashSet}
+import scala.collection.mutable.{Queue, HashSet, Stack}
 
 object Navigation {
+
+  class SyntaxChecker(codeLines: List[String]) {
+    val openingChars = List('(', '[', '{', '<')
+    val closingChars = List(')', ']', '}', '>')
+    val charPairMap = closingChars.zip(openingChars).toMap
+    val scores = List(3, 57, 1197, 25137)
+    val valueMap: Map[Char, Int] = closingChars.zip(scores).toMap
+
+    case class Line(chrs: Array[Char]) {
+      val firstIllegalChar: Option[Char] = {
+        var charStack = new Stack[Char]
+        var working = true
+        var returnValue: Option[Char] = None
+        chrs.takeWhile(_ => working).foreach(c => {
+          if (openingChars contains c) charStack.push(c)
+          if (closingChars contains c) {
+            if (charPairMap(c) != charStack.pop) {
+              working = false
+              returnValue = Some(c)
+            }
+          }
+        })
+        returnValue
+      }
+    }
+    def getScore: Int = {
+      codeLines
+      .map(line => Line(line.toCharArray).firstIllegalChar)
+      .filterNot(_.isEmpty)
+      .map(_.get)
+      .map(c => valueMap.getOrElse(c, 0))
+      .sum
+    }
+    
+  }
 
   class CaveHeightMap(surface: Array[Array[Int]]) extends LazyLogging {
 
