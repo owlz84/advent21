@@ -15,19 +15,43 @@ class day09 extends FunSuite with Matchers with LazyLogging {
       })
       .toArray
       val result = new CaveHeightMap(exampleData).totalRiskScore
-      result shouldBe day09.exampleExpectedResult
+      result shouldBe day09.exampleExpectedResultPart1
   }
   
   test(
     "(generate submission for part 1)"
   ) {
-    val exampleData = day09.input
+    val data = day09.input
       .split("\n")
       .map({ line =>
         line.map(x => Integer.parseInt(String.valueOf(x))).toArray
       })
       .toArray
-      val result = new CaveHeightMap(exampleData).totalRiskScore
+      val result = new CaveHeightMap(data).totalRiskScore
+      logger.info(s"result: $result")
+  }
+  test(
+    "The navigation unit should correctly identify the three largest basins"
+  ) {
+    val exampleData = day09.exampleInput
+      .split("\n")
+      .map({ line =>
+        line.map(x => Integer.parseInt(String.valueOf(x))).toArray
+      })
+      .toArray
+      val result = new CaveHeightMap(exampleData).getBasinSizes
+      result shouldBe day09.exampleExpectedResultPart2
+  }
+  test(
+    "(generate submission for part 2)"
+  ) {
+    val data = day09.input
+      .split("\n")
+      .map({ line =>
+        line.map(x => Integer.parseInt(String.valueOf(x))).toArray
+      })
+      .toArray
+      val result = new CaveHeightMap(data).getBasinSizes
       logger.info(s"result: $result")
   }
 }
@@ -40,7 +64,8 @@ object day09 {
       |8767896789
       |9899965678""".stripMargin
 
-  val exampleExpectedResult: Int = 15
+  val exampleExpectedResultPart1: Int = 15
+  val exampleExpectedResultPart2: Int = 1134
 
   val input: String = 
     """7678921234988678901238954323498765432125789999567898765454223789989865432124569899894325678989212965
