@@ -17,25 +17,27 @@ object Navigation {
         var charStack = new Stack[Char]
         var working = true
         var returnValue: Option[Char] = None
-        chrs.takeWhile(_ => working).foreach(c => {
-          if (openingChars contains c) charStack.push(c)
-          if (closingChars contains c) {
-            if (charPairMap(c) != charStack.pop) {
-              working = false
-              returnValue = Some(c)
+        chrs
+          .takeWhile(_ => working)
+          .foreach(c => {
+            if (openingChars contains c) charStack.push(c)
+            if (closingChars contains c) {
+              if (charPairMap(c) != charStack.pop) {
+                working = false
+                returnValue = Some(c)
+              }
             }
-          }
-        })
+          })
         returnValue
       }
     }
     def getScore: Int = {
       codeLines
-      .map(line => Line(line.toCharArray).firstIllegalChar)
-      .filterNot(_.isEmpty)
-      .map(_.get)
-      .map(c => valueMap.getOrElse(c, 0))
-      .sum
+        .map(line => Line(line.toCharArray).firstIllegalChar)
+        .filterNot(_.isEmpty)
+        .map(_.get)
+        .map(c => valueMap.getOrElse(c, 0))
+        .sum
     }
   }
 
