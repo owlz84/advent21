@@ -4,14 +4,6 @@ import com.typesafe.scalalogging.LazyLogging
 import scala.collection.mutable.{Queue, HashSet}
 
 object Navigation {
-  object Direction extends Enumeration {
-    type Dir = Value
-    val forward, down, up = Value
-  }
-
-  final case class Heading(direction: Direction.Dir, magnitude: Int)
-
-  final case class Location(depth: Int, horizontalPosition: Int, aim: Int)
 
   class CaveHeightMap(surface: Array[Array[Int]]) extends LazyLogging {
 
@@ -78,5 +70,14 @@ object Navigation {
         .reduceLeft(_ * _)
     }
   }
+
+  object Direction extends Enumeration {
+    type Dir = Value
+    val forward, down, up = Value
+  }
+
+  final case class Heading(direction: Direction.Dir, magnitude: Int)
+
+  final case class Location(depth: Int, horizontalPosition: Int, aim: Int)
 
 }
