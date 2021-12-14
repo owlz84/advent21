@@ -37,7 +37,6 @@ object Navigation {
       .map(c => valueMap.getOrElse(c, 0))
       .sum
     }
-    
   }
 
   class CaveHeightMap(surface: Array[Array[Int]]) extends LazyLogging {
