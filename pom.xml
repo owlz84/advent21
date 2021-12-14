@@ -116,6 +116,7 @@
           <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
           <junitxml>.</junitxml>
           <filereports>TestSuiteReport.txt</filereports>
+          <argLine>-Dsun.io.serialization.extendedDebugInfo=true</argLine>
           <!-- Comma separated list of JUnit test class names to execute -->
           <!-- <jUnitClasses>samples.AppTest</jUnitClasses> -->
           <discoverySuite>org.stuart.advent21</discoverySuite>

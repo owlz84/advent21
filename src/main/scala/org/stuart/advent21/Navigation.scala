@@ -5,18 +5,19 @@ import scala.collection.mutable.{Queue, HashSet, Stack}
 
 object Navigation {
 
-  class SyntaxChecker(codeLines: List[String]) {
+  class SyntaxChecker(codeLines: List[String]) extends LazyLogging {
     val openingChars = List('(', '[', '{', '<')
     val closingChars = List(')', ']', '}', '>')
-    val charPairMap = closingChars.zip(openingChars).toMap
-    val scores = List(3, 57, 1197, 25137)
-    val valueMap = closingChars.zip(scores).toMap
+    val corruptCharScores = List(3, 57, 1197, 25137)
+    val corruptCharScoreMap = closingChars.zip(corruptCharScores).toMap
+    val autoCorrectScoreMap = closingChars.zipWithIndex.map( {case (c: Char, s: Int) => (c, s+1)}).toMap
 
     case class Line(chrs: Array[Char]) {
       val firstIllegalChar: Option[Char] = {
+        var returnVal: Option[Char] = None
+        val charPairMap = closingChars.zip(openingChars).toMap
         var charStack = new Stack[Char]
         var working = true
-        var returnValue: Option[Char] = None
         chrs
           .takeWhile(_ => working)
           .foreach(c => {
@@ -24,20 +25,63 @@ object Navigation {
             if (closingChars contains c) {
               if (charPairMap(c) != charStack.pop) {
                 working = false
-                returnValue = Some(c)
+                returnVal = Some(c)
               }
             }
           })
-        returnValue
+        returnVal
+      }
+      val autoComplete: Option[String] = {
+        var returnVal: Option[String] = None
+        val charPairMap = openingChars.zip(closingChars).toMap
+        var charStack = new Stack[Char]
+        
+        if (firstIllegalChar.isEmpty) {
+          chrs
+            .foreach(c => {
+              if (openingChars contains c) charStack.push(c)
+              if (closingChars contains c) charStack.pop()
+            })
+          returnVal = Some(charStack.toList.map(charPairMap(_)).mkString)
+        }
+        returnVal
       }
     }
-    def getScore: Int = {
-      codeLines
+
+    def getCorruptLinesScore: Option[Long] = {
+      val corruptCodeLines = codeLines
         .map(line => Line(line.toCharArray).firstIllegalChar)
         .filterNot(_.isEmpty)
+
+      if (corruptCodeLines.isEmpty) return None
+
+      val score = corruptCodeLines
         .map(_.get)
-        .map(c => valueMap.getOrElse(c, 0))
+        .map(c => corruptCharScoreMap.getOrElse(c, 0).toLong)
         .sum
+
+      return Some(score)
+    }
+
+    def getAutoCompleteScore: Option[Long] = {
+      val incompleteCodeLines = codeLines
+        .map(line => Line(line.toCharArray).autoComplete)
+        .filterNot(_.isEmpty)
+        .map(_.get.toCharArray)
+
+      if (incompleteCodeLines.isEmpty) return None
+
+      val scoresSorted = incompleteCodeLines
+        .map(cArray => {
+          cArray.map(c => autoCorrectScoreMap(c).toLong)
+          .reduceLeft(_ * 5 + _)
+        })
+        .sorted
+
+      logger.debug(scoresSorted.mkString("\t"))
+      val score = scoresSorted((incompleteCodeLines.length - 1) / 2)
+      
+      Some(score)
     }
   }
 

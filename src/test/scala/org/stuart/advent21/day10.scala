@@ -8,12 +8,22 @@ class Day10Tests extends FunSuite with Matchers with LazyLogging {
 
   test("The navigation error checker should correctly compute the total syntax error score") {
     val codeLines = Day10.exampleInput.split("\n").toList
-    val result = new SyntaxChecker(codeLines).getScore
+    val result = new SyntaxChecker(codeLines).getCorruptLinesScore.getOrElse(0)
     result shouldBe Day10.exampleExpectedResultPart1
   }
-  test("(compute submission for part 1") {
+  test("(compute submission for part 1)") {
     val codeLines = Day10.input.split("\n").toList
-    val result = new SyntaxChecker(codeLines).getScore
+    val result = new SyntaxChecker(codeLines).getCorruptLinesScore.getOrElse(0)
+    logger.info(s"result: $result")
+  }
+  test("The navigation autocorrect system should identify the correct winning score") {
+    val codeLines = Day10.exampleInput.split("\n").toList
+    val result = new SyntaxChecker(codeLines).getAutoCompleteScore.getOrElse(0)
+    result shouldBe Day10.exampleExpectedResultPart2
+  }
+  test("(compute submission for part 2)") {
+    val codeLines = Day10.input.split("\n").toList
+    val result = new SyntaxChecker(codeLines).getAutoCompleteScore.getOrElse(0)
     logger.info(s"result: $result")
   }
 
@@ -33,7 +43,8 @@ object Day10 {
     |<{([([[(<>()){}]>(<<{{
     |<{([{{}}[<[[[<>{}]]]>[]]""".stripMargin
 
-  val exampleExpectedResultPart1 = 26397
+  val exampleExpectedResultPart1 = 26397L
+  val exampleExpectedResultPart2 = 288957L
 
   val input = 
     """[{[[{(((<[{{((()<>)(<><>))[{{}{}}((){})]}[<<()[]>[{}()]>[{<>{}}<()()>]]}{{[[{}<>]({}{})]<[{}
