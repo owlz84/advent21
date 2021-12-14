@@ -1,6 +1,6 @@
 package org.stuart.advent21
 
-import org.stuart.advent21.navigation.{Direction, Heading}
+import org.stuart.advent21.Navigation.{Heading, Direction}
 import org.scalatest._
 
 class day02 extends FunSuite with Matchers with BeforeAndAfterEach {
@@ -11,19 +11,35 @@ class day02 extends FunSuite with Matchers with BeforeAndAfterEach {
     sub = new Submarine()
   }
 
-  test("Sending a series of commands to the navigation unit propels the submarine to the correct location") {
+  ignore("Sending a series of commands to the old navigation unit propels the submarine to the correct location") {
     day02.testDataPart1.map({
       case(direction, magnitude) => Heading(direction, magnitude)
     }).map(sub.move)
-    val check = sub.location.depth * sub.location.position
+    val check = sub.location.depth * sub.location.horizontalPosition
     check shouldBe day02.expectedResultPart1
   }
 
-  test("(create solution for challenge part 1)") {
+  ignore("(create solution for challenge part 1)") {
     day02.input.map({
       case(direction, magnitude) => Heading(direction, magnitude)
     }).map(sub.move)
-    val check = sub.location.depth * sub.location.position
+    val check = sub.location.depth * sub.location.horizontalPosition
+    println(check)
+  }
+
+  test("Sending a series of commands to the updated navigation unit propels the submarine to the correct location") {
+    day02.testDataPart1.map({
+      case(direction, magnitude) => Heading(direction, magnitude)
+    }).map(sub.move)
+    val check = sub.location.depth * sub.location.horizontalPosition
+    check shouldBe day02.expectedResultPart2
+  }
+
+  test("(create solution for challenge part 2)") {
+    day02.input.map({
+      case(direction, magnitude) => Heading(direction, magnitude)
+    }).map(sub.move)
+    val check = sub.location.depth * sub.location.horizontalPosition
     println(check)
   }
 
@@ -39,6 +55,8 @@ object day02 {
     (Direction.forward, 2)
   )
   val expectedResultPart1 = 150
+
+  val expectedResultPart2 = 900
 
   val input = List(
     (Direction.forward, 4),

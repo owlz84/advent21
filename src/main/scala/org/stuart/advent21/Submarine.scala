@@ -1,5 +1,5 @@
 package org.stuart.advent21
 
-class Submarine extends Sonar with Propulsion {
-  
+class Submarine extends Sonar with Propulsion with Diagnostics {
+  var bingo = new Bingo()
 }
