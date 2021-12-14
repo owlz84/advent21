@@ -1,5 +1,6 @@
 package org.stuart.advent21
 
+import org.stuart.advent21.Navigation.{Location, Heading, Direction}
 import com.typesafe.scalalogging.LazyLogging
 
 trait Propulsion extends LazyLogging {

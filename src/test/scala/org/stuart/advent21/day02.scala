@@ -1,5 +1,6 @@
 package org.stuart.advent21
 
+import org.stuart.advent21.Navigation.{Heading, Direction}
 import org.scalatest._
 
 class day02 extends FunSuite with Matchers with BeforeAndAfterEach {
