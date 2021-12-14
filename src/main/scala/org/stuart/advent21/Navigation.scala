@@ -10,7 +10,9 @@ object Navigation {
     val closingChars = List(')', ']', '}', '>')
     val corruptCharScores = List(3, 57, 1197, 25137)
     val corruptCharScoreMap = closingChars.zip(corruptCharScores).toMap
-    val autoCorrectScoreMap = closingChars.zipWithIndex.map( {case (c: Char, s: Int) => (c, s+1)}).toMap
+    val autoCorrectScoreMap = closingChars.zipWithIndex
+      .map({ case (c: Char, s: Int) => (c, s + 1) })
+      .toMap
 
     case class Line(chrs: Array[Char]) {
       val firstIllegalChar: Option[Char] = {
@@ -35,7 +37,7 @@ object Navigation {
         var returnVal: Option[String] = None
         val charPairMap = openingChars.zip(closingChars).toMap
         var charStack = new Stack[Char]
-        
+
         if (firstIllegalChar.isEmpty) {
           chrs
             .foreach(c => {
@@ -73,14 +75,15 @@ object Navigation {
 
       val scoresSorted = incompleteCodeLines
         .map(cArray => {
-          cArray.map(c => autoCorrectScoreMap(c).toLong)
-          .reduceLeft(_ * 5 + _)
+          cArray
+            .map(c => autoCorrectScoreMap(c).toLong)
+            .reduceLeft(_ * 5 + _)
         })
         .sorted
 
       logger.debug(scoresSorted.mkString("\t"))
       val score = scoresSorted((incompleteCodeLines.length - 1) / 2)
-      
+
       Some(score)
     }
   }
