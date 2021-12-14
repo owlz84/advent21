@@ -10,7 +10,7 @@ object Navigation {
     val closingChars = List(')', ']', '}', '>')
     val charPairMap = closingChars.zip(openingChars).toMap
     val scores = List(3, 57, 1197, 25137)
-    val valueMap: Map[Char, Int] = closingChars.zip(scores).toMap
+    val valueMap = closingChars.zip(scores).toMap
 
     case class Line(chrs: Array[Char]) {
       val firstIllegalChar: Option[Char] = {
