@@ -73,16 +73,14 @@ object Navigation {
 
       if (incompleteCodeLines.isEmpty) return None
 
-      val scoresSorted = incompleteCodeLines
+      val score = incompleteCodeLines
         .map(cArray => {
           cArray
             .map(c => autoCorrectScoreMap(c).toLong)
             .reduceLeft(_ * 5 + _)
         })
         .sorted
-
-      logger.debug(scoresSorted.mkString("\t"))
-      val score = scoresSorted((incompleteCodeLines.length - 1) / 2)
+        .apply((incompleteCodeLines.length - 1) / 2)
 
       Some(score)
     }

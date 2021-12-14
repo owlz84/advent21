@@ -3,6 +3,7 @@ package org.stuart.advent21
 import org.scalatest._
 import com.typesafe.scalalogging.LazyLogging
 import scala.collection.mutable.ArrayBuffer
+import org.stuart.advent21.Wildlife.Crabs
 
 class day07
     extends FunSuite
